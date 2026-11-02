@@ -360,58 +360,6 @@ h2 {
     clip-path: polygon(0 0, 100% 0, 100% 100%)
 }
 
-.bar {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    min-height: 52px
-}
-
-.pill {
-    font: 600 17px/1 Lora, Georgia, serif;
-    color: #3b2a33;
-    background: var(--pill);
-    border: 0;
-    border-radius: 24px;
-    padding: 16px 28px;
-    cursor: pointer;
-    box-shadow: 0 8px 22px -10px rgba(120, 60, 110, .5)
-}
-
-.nb {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1px solid rgba(150, 110, 90, .45);
-    background: var(--btn);
-    color: var(--ui);
-    display: grid;
-    place-items: center;
-    cursor: pointer
-}
-
-.nb:disabled {
-    opacity: .35;
-    cursor: default
-}
-
-.ct {
-    min-width: 5.5em;
-    text-align: center;
-    font: italic 15px Lora, Georgia, serif
-}
-
-[data-state=closed] .nb,
-[data-state=closed] .ct {
-    display: none
-}
-
-[data-state=open] .pill {
-    display: none
-}
-
 :focus-visible {
     outline: 2px solid #b6578f;
     outline-offset: 3px
@@ -440,4 +388,133 @@ h2 {
 
 .face.front .sub {
     margin-top: 12px;
+}
+
+/* =========================
+   Final Social Page
+   ========================= */
+
+.page.end {
+    justify-content: center;
+    gap: 0;
+}
+
+.page.end .lf {
+    margin-bottom: 12px;
+}
+
+.page.end h2 {
+    margin: 0;
+}
+
+.social-title {
+    margin: 18px 0 16px;
+    font: italic 500 clamp(11px, calc(var(--w) * .028), 14px)/1.4 "Cormorant Garamond", Georgia, serif;
+    color: var(--ink);
+    letter-spacing: .08em;
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.social-link {
+    min-width: 92px;
+    padding: 9px 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid rgba(176, 140, 100, .45);
+    border-radius: 30px;
+
+    background: rgba(255, 249, 243, .45);
+
+    color: var(--gold);
+    text-decoration: none;
+
+    font: 600 clamp(9px, calc(var(--w) * .023), 11px)/1 "Cormorant Garamond", Georgia, serif;
+
+    letter-spacing: .04em;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        transform .25s ease,
+        border-color .25s ease;
+}
+
+.social-link svg {
+    width: 14px;
+    height: 14px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+
+    flex-shrink: 0;
+}
+
+.social-link:first-child svg path {
+    fill: currentColor;
+    stroke: none;
+}
+
+.social-link:hover {
+    background: rgba(176, 140, 100, .12);
+    border-color: var(--gold);
+    color: var(--gold2);
+    transform: translateY(-2px);
+}
+
+.social-handle {
+    margin: 17px 0 0;
+
+    font: 500 clamp(9px, calc(var(--w) * .022), 11px)/1.4 "Lora", Georgia, serif;
+
+    color: var(--ink);
+    opacity: .75;
+    letter-spacing: .08em;
+}
+
+/* =========================================
+   Clean book edges
+   Prevent stacked pages from showing
+   excessively from the bottom
+   ========================================= */
+
+.book .base {
+    box-shadow:
+        0 2px 0 rgba(236, 225, 213, .9),
+        0 4px 8px -6px rgba(80, 45, 40, .28);
+}
+
+/* Keep the page itself clean at the bottom */
+.book .page {
+    box-shadow: none;
+}
+
+/* Make the bottom edge of the book visually unified */
+.book::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 5px;
+
+    border-radius: 0 0 7px 7px;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(203, 184, 166, .45),
+            rgba(236, 225, 213, .8));
+
+    pointer-events: none;
+    z-index: 100;
 }
