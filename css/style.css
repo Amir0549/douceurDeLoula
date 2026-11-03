@@ -482,6 +482,26 @@ h2 {
     letter-spacing: .08em;
 }
 
+@media (max-width: 600px) {
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        max-width: 205px;
+        margin: 0 auto;
+    }
+
+    .social-link {
+        min-width: 92px;
+    }
+
+    .social-link:nth-child(3) {
+        margin-left: calc(50% - 46px);
+        margin-right: calc(50% - 46px);
+    }
+}
+
 /* =========================================
    Clean book edges
    Prevent stacked pages from showing

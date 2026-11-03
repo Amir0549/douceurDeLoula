@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:ital,wght@0,500;0,600;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=2.0.1">
+    <link rel="stylesheet" href="css/style.css?v=2.0.2">
 </head>
 
 <body>
@@ -295,55 +295,24 @@
             let page = 0;
 
             // =========================
-            // Page sound
+            // Real page-turn sound
             // =========================
-            let audioContext = null;
+            const pageTurnSound = new Audio(
+                'https://sfxmint.com/dl/paper-fabric-page-turn-33.mp3'
+            );
+
+            pageTurnSound.preload = 'auto';
+            pageTurnSound.volume = 0.48;
 
             function initAudio() {
-                if (!audioContext) {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                }
-
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
+                // Keep this function for browser autoplay compatibility.
+                pageTurnSound.load();
             }
 
             function playPageSound() {
-                if (!audioContext) return;
-
-                const duration = 0.12;
-                const sampleRate = audioContext.sampleRate;
-                const buffer = audioContext.createBuffer(
-                    1,
-                    sampleRate * duration,
-                    sampleRate
-                );
-
-                const data = buffer.getChannelData(0);
-
-                for (let i = 0; i < data.length; i++) {
-                    const fade = 1 - i / data.length;
-                    data[i] = (Math.random() * 2 - 1) * fade * 0.18;
-                }
-
-                const source = audioContext.createBufferSource();
-                const filter = audioContext.createBiquadFilter();
-                const gain = audioContext.createGain();
-
-                filter.type = 'bandpass';
-                filter.frequency.value = 1800;
-                filter.Q.value = 0.7;
-
-                gain.gain.value = 0.35;
-
-                source.buffer = buffer;
-
-                source.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioContext.destination);
-
-                source.start();
+                // Restart the real paper/page-turn recording on every flip.
+                pageTurnSound.currentTime = 0;
+                pageTurnSound.play().catch(() => { });
             }
 
             // =========================
@@ -384,7 +353,6 @@
                 // Sound ONLY for internal pages.
                 // Opening/closing the cover is silent.
                 if (oldPage > 0 && page > 0) {
-                    initAudio();
                     playPageSound();
                 }
 
